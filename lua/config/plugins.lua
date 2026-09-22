@@ -125,6 +125,97 @@ require("lazy").setup({
       })
     end,
   },
+  -- Oil.nvim
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    config = function()
+      require("oil").setup()
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    end,
+  },
 
+  -- 7. Nvim-Treesitter (Advanced syntax highlighting)
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        ensure_installed = { "c", "cpp", "c_sharp", "lua", "vim", "vimdoc", "query", "powershell", "json" },
+        auto_install = true,
+        highlight = { enable = true },
+      })
+    end,
+  },
+
+  -- Nvim-Surround
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup()
+    end,
+  },
+
+  -- Nvim-Autopairs
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup({})
+      -- Integration with nvim-cmp so hitting enter after confirming a function inserts parens properly
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local cmp = require("cmp")
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end,
+  },
+
+  -- Gitsigns
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
+
+  -- Trouble.nvim
+  {
+    "folke/trouble.nvim",
+    opts = {},
+    cmd = "Trouble",
+    keys = {
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>Trouble buffer_diagnostics toggle<cr>", desc = "Buffer Diagnostics (Trouble)" },
+    },
+  },
+
+  -- Lualine.nvim
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lualine").setup({
+        options = { theme = "retrobox" },
+      })
+    end,
+  },
+
+  -- Bufferline.nvim
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("bufferline").setup({})
+    end,
+  },
+
+  -- Dressing.nvim
+  {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+  },
 })
 
